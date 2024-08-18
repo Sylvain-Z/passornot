@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <title>PassOrNot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body class="home">
+
+    <header id="header">
+        <!-- Contenu Injecter en JS pour faciliter la modification -->
+    </header>
+
+
+    <main>
+        <h2>Moyennes</h2>
+
+        <div class="calculator" id="">
+            <form id="screen">
+                <div class="input-div">
+                    <p id="input"></p>
+                    <p id="eraseOneNumber"><i
+                        class="fa-solid fa-delete-left fa-sm"></i></p>
+                </div>
+
+                <div class="button-container">
+                    <button class="boutton" id="seven" type="button">7</button>
+                    <button class="boutton" id="eight" type="button">8</button>
+                    <button class="boutton" id="nine" type="button">9</button>
+                    <button class="boutton" id="four" type="button">4</button>
+                    <button class="boutton" id="five" type="button">5</button>
+                    <button class="boutton" id="six" type="button">6</button>
+                    <button class="boutton" id="one" type="button">1</button>
+                    <button class="boutton" id="two" type="button">2</button>
+                    <button class="boutton" id="three" type="button">3</button>
+                    <button class="boutton zero" id="zero" type="button">0</button>
+                    <button class="boutton dot" id="dot" type="button">.</button>
+                    <button class="boutton plus" id="plus" type="button">+ Note</button>
+                    <button class="boutton emptyInput" id="emptyInput" type="button"><i class="fa-solid fa-xmark fa-sm"></i></button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="result-div">
+            <p class="result" id="result"></p>
+        </div>
+
+        <article class="marksList">
+            <h3>Liste des nombres</h3>
+            <p id="marksDisplay"></p>
+            <div class="button-container listClear">
+                <button class="bouttonList" id="eraseLastMark" type="button"><i
+                        class="fa-solid fa-delete-left fa-2xs"></i></button>
+                <button class="bouttonList" id="eraseAllMark" type="button"><i class="fa-solid fa-trash fa-2xs"></i></button>
+            </div>
+        </article>
+
+    </main>
+
+
+    <footer id="footer">
+        <!-- Contenu Injecter en JS pour faciliter la modification -->
+    </footer>
+
+
+
+
+    <script type="text/javascript" src="scripts/script.js"></script>
+    <script type="text/javascript" src="scripts/header.js"></script>
+    <script type="text/javascript" src="scripts/footer.js"></script>
+
+</body>
+
+</html>

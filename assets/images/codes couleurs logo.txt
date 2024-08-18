@@ -1,0 +1,7 @@
+#FCBC04  jaune orangé
+#E59730  orange
+#F9E109  jaune
+#4891D3  bleu 1
+#2D72BC  bleu 2
+#57B7EB  bleu 3
+#A1D51C  vert
