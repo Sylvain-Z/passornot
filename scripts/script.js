@@ -1,6 +1,5 @@
 /* --------------- Animation Typing --------------------------*/
 
-// function([string1], target id)    
 typeDisplay(['Commencer'], 'start');
 
 function typeDisplay(words, id) {
@@ -58,12 +57,18 @@ const emptyInput = document.getElementById("emptyInput");
 const eraseOneNumber = document.getElementById("eraseOneNumber");
 
 const plus = document.getElementById("plus");
+const plusAverage = document.getElementById("plusAverage");
 
 const result = document.getElementById("result");
+const averageResult = document.getElementById("averageResult");
 
 const marksDisplay = document.getElementById("marksDisplay");
 const eraseLastMark = document.getElementById("eraseLastMark");
 const eraseAllMark = document.getElementById("eraseAllMark");
+
+const averagesDisplay = document.getElementById("averagesDisplay");
+const eraseLastAverage = document.getElementById("eraseLastAverage");
+const eraseAllAverage = document.getElementById("eraseAllAverage");
 
 /* fonctions */
 
@@ -122,6 +127,9 @@ function eraseLast() {
     updateDisplay();
   })
 };
+
+/* --------- */
+
 function addMark() {
   plus.addEventListener("click", () => {
     let newMark = input.innerHTML;
@@ -156,7 +164,7 @@ function displayAverage() {
 function removeLastMark() {
   eraseLastMark.addEventListener("click", () => {
     let marks = JSON.parse(localStorage.getItem("marks")) || [];
-    if (marks.length === 1) { 
+    if (marks.length === 1) {
       localStorage.removeItem("marks");
       marksDisplay.innerHTML = [];
       result.innerHTML = "";
@@ -177,9 +185,70 @@ function emptyMarksList() {
   })
 };
 
+/* --------- */
+
+function addAverage() {
+  plusAverage.addEventListener("click", () => {
+    let newAverage = result.innerHTML;
+    let currentAverages = JSON.parse(localStorage.getItem("averages")) || [];
+    if (newAverage.trim() !== "") {
+      currentAverages.push(newAverage);
+      localStorage.setItem("averages", JSON.stringify(currentAverages));
+      input.innerHTML = "";
+      result.innerHTML = "";
+      localStorage.removeItem("marks");
+    }
+
+    updateDisplay();
+  })
+};
+function displayAverages() {
+  let averages = JSON.parse(localStorage.getItem("averages")) || [];
+  averagesDisplay.innerHTML = averages.join(" + ");
+}
+function getAveragesAverage() {
+  let averages = JSON.parse(localStorage.getItem("averages")) || [];
+  let sum = 0;
+  for (const average of averages) {
+    sum += parseFloat(average);
+  }
+  return sum / averages.length;
+};
+function displayAveragesAverage() {
+  let averagesAverage = getAveragesAverage();
+  if (averagesAverage) {
+    averageResult.innerHTML = averagesAverage.toFixed(2);
+  }
+};
+function removeLastAverage() {
+  eraseLastAverage.addEventListener("click", () => {
+    let averages = JSON.parse(localStorage.getItem("averages")) || [];
+    if (averages.length === 1) {
+      localStorage.removeItem("averages");
+      averagesDisplay.innerHTML = [];
+      averageResult.innerHTML = "";
+    } else {
+      averages.pop();
+      localStorage.setItem("averages", JSON.stringify(averages));
+
+      updateDisplay();
+    }
+  })
+};
+function emptyAveragesList() {
+  eraseAllAverage.addEventListener("click", () => {
+    localStorage.removeItem("averages");
+
+    averagesDisplay.innerHTML = [];
+    averageResult.innerHTML = "";
+  })
+};
+
 function updateDisplay() {
   displayMarks();
   displayAverage();
+  displayAverages();
+  displayAveragesAverage();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -202,11 +271,16 @@ document.addEventListener('DOMContentLoaded', () => {
   eraseLast();
 
   addMark();
-
   getAverage();
 
   emptyMarksList();
   removeLastMark();
+
+  addAverage();
+  getAveragesAverage();
+
+  removeLastAverage();
+  emptyAveragesList();
 
   updateDisplay();
 });

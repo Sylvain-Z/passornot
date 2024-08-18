@@ -46,17 +46,32 @@
             </form>
         </div>
         
-        <div class="result-div">
-            <p class="result" id="result"></p>
-        </div>
 
+        
         <article class="marksList">
-            <h3>Liste des nombres</h3>
+            <div class="result-div">
+                <p class="result" id="result"></p>
+            </div>
+            <h3>Liste des notes</h3>
             <p id="marksDisplay"></p>
-            <div class="button-container listClear">
-                <button class="bouttonList" id="eraseLastMark" type="button"><i
-                        class="fa-solid fa-delete-left fa-2xs"></i></button>
-                <button class="bouttonList" id="eraseAllMark" type="button"><i class="fa-solid fa-trash fa-2xs"></i></button>
+            <div class="button-container">
+                <button class="boutton plus plusAverage" id="plusAverage" type="button">+ Moyenne</button>
+                <button class="boutton erase-btn" id="eraseLastMark" type="button"><i class="fa-solid fa-delete-left fa-sm"></i></button>
+                <button class="boutton erase-btn" id="eraseAllMark" type="button"><i class="fa-solid fa-trash fa-sm"></i></button>
+            </div>
+        </article>
+
+
+
+        <article class="averagesList">
+            <div class="averagesResult-div">
+                <p class="result" id="averageResult"></p>
+            </div>
+            <h3>Liste des Moyennes</h3>
+            <p id="averagesDisplay"></p>
+            <div class="button-container center-div">
+                <button class="boutton erase-btn center-btn" id="eraseLastAverage" type="button"><i class="fa-solid fa-delete-left fa-sm"></i></button>
+                <button class="boutton erase-btn center-btn" id="eraseAllAverage" type="button"><i class="fa-solid fa-trash fa-sm"></i></button>
             </div>
         </article>
 
