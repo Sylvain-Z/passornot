@@ -76,7 +76,6 @@ function start() {
   input.innerHTML = 0;
 }
 
-
 function type(btn) {
   btn.addEventListener("click", () => {
 
@@ -87,7 +86,6 @@ function type(btn) {
     }
 
     let separate = currentInput.split(".");
-
     if (separate[0].length >= 2 && btn !== dot && separate[0] !== "10" && !currentInput.includes(".")) {
       return;
     }
@@ -102,154 +100,115 @@ function type(btn) {
     }
 
     let value = parseFloat(input.innerHTML);
-
     if (value > 100) {
       input.innerHTML = currentInput;
     }
 
   })
 };
-function eraseInput() {
-  emptyInput.addEventListener("click", () => {
-    input.innerHTML = 0;
 
-    updateDisplay();
-  })
-};
 function eraseLast() {
-  eraseOneNumber.addEventListener("click", () => {
-    if (input.innerHTML === "0" || input.innerHTML.length === 1) {
-      input.innerHTML = 0;
-    } else {
-      input.innerHTML = input.innerHTML.slice(0, -1);
-    }
-
-    updateDisplay();
-  })
+  if (input.innerHTML === "0" || input.innerHTML.length === 1) {
+    input.innerHTML = 0;
+  } else {
+    input.innerHTML = input.innerHTML.slice(0, -1);
+  }
 };
+function eraseInput() {
+  input.innerHTML = 0;
+};
+
+eraseOneNumber.onclick = () => eraseLast();
+emptyInput.onclick = () => eraseInput();
 
 /* --------- */
 
-function addMark() {
-  plus.addEventListener("click", () => {
-    let newMark = input.innerHTML;
-    let currentMarks = JSON.parse(localStorage.getItem("marks")) || [];
-    if (newMark.trim() !== "") {
-      currentMarks.push(newMark);
-      localStorage.setItem("marks", JSON.stringify(currentMarks));
-      input.innerHTML = "";
-    }
+function addMark(gradecategorie, numberscr) {
+  let newMark = numberscr.innerHTML;
+  let displayList;
+  let resultdisplay;
+  let currentMarks = JSON.parse(localStorage.getItem(gradecategorie)) || [];
 
-    updateDisplay();
-  })
+  if (newMark.trim() !== "") {
+    currentMarks.push(newMark);
+    localStorage.setItem(gradecategorie, JSON.stringify(currentMarks));
+
+    if (gradecategorie === "marks") {
+      numberscr.innerHTML = "0";
+      displayList = marksDisplay;
+      resultdisplay = result;
+    } else {
+      numberscr.innerHTML = "";
+      input.innerHTML = "0";
+      marksDisplay.innerHTML = "";
+      displayList = averagesDisplay;
+      resultdisplay = averageResult;
+      localStorage.removeItem("marks");
+    }
+  }
+
+  updateDisplay(gradecategorie, displayList, resultdisplay);
 };
-function displayMarks() {
-  let marks = JSON.parse(localStorage.getItem("marks")) || [];
-  marksDisplay.innerHTML = marks.join(" + ");
+
+function displayMarks(gradecategorie, displayList) {
+  let marks = JSON.parse(localStorage.getItem(gradecategorie)) || [];
+  displayList.innerHTML = marks.join(" + ");
 }
-function getAverage() {
-  let marks = JSON.parse(localStorage.getItem("marks")) || [];
+function getAverage(gradecategorie) {
+  let marks = JSON.parse(localStorage.getItem(gradecategorie)) || [];
+  if (marks.length === 0) return 0;
   let sum = 0;
   for (const mark of marks) {
     sum += parseFloat(mark);
   }
   return sum / marks.length;
 };
-function displayAverage() {
-  let average = getAverage();
+function displayAverage(gradecategorie, resultdisplay) {
+  let average = getAverage(gradecategorie);
   if (average) {
-    result.innerHTML = average.toFixed(2);
+    resultdisplay.innerHTML = average.toFixed(2);
   }
 };
-function removeLastMark() {
-  eraseLastMark.addEventListener("click", () => {
-    let marks = JSON.parse(localStorage.getItem("marks")) || [];
-    if (marks.length === 1) {
-      localStorage.removeItem("marks");
-      marksDisplay.innerHTML = [];
-      result.innerHTML = "";
-    } else {
-      marks.pop();
-      localStorage.setItem("marks", JSON.stringify(marks));
 
-      updateDisplay();
-    }
-  })
-};
-function emptyMarksList() {
-  eraseAllMark.addEventListener("click", () => {
-    localStorage.removeItem("marks");
-
+function removeLastMark(gradecategorie) {
+  let marks = JSON.parse(localStorage.getItem(gradecategorie)) || [];
+  if (marks.length === 1) {
+    localStorage.removeItem(gradecategorie);
     marksDisplay.innerHTML = [];
     result.innerHTML = "";
-  })
-};
+  } else {
+    marks.pop();
+    localStorage.setItem(gradecategorie, JSON.stringify(marks));
 
-/* --------- */
-
-function addAverage() {
-  plusAverage.addEventListener("click", () => {
-    let newAverage = result.innerHTML;
-    let currentAverages = JSON.parse(localStorage.getItem("averages")) || [];
-    if (newAverage.trim() !== "") {
-      currentAverages.push(newAverage);
-      localStorage.setItem("averages", JSON.stringify(currentAverages));
-      input.innerHTML = "";
-      result.innerHTML = "";
-      localStorage.removeItem("marks");
-    }
-
-    updateDisplay();
-  })
-};
-function displayAverages() {
-  let averages = JSON.parse(localStorage.getItem("averages")) || [];
-  averagesDisplay.innerHTML = averages.join(" + ");
-}
-function getAveragesAverage() {
-  let averages = JSON.parse(localStorage.getItem("averages")) || [];
-  let sum = 0;
-  for (const average of averages) {
-    sum += parseFloat(average);
-  }
-  return sum / averages.length;
-};
-function displayAveragesAverage() {
-  let averagesAverage = getAveragesAverage();
-  if (averagesAverage) {
-    averageResult.innerHTML = averagesAverage.toFixed(2);
-  }
-};
-function removeLastAverage() {
-  eraseLastAverage.addEventListener("click", () => {
-    let averages = JSON.parse(localStorage.getItem("averages")) || [];
-    if (averages.length === 1) {
-      localStorage.removeItem("averages");
-      averagesDisplay.innerHTML = [];
-      averageResult.innerHTML = "";
+    if (gradecategorie === "marks") {
+      displayList = marksDisplay;
+      resultdisplay = result;
     } else {
-      averages.pop();
-      localStorage.setItem("averages", JSON.stringify(averages));
-
-      updateDisplay();
+      displayList = averagesDisplay;
+      resultdisplay = averageResult;
     }
-  })
-};
-function emptyAveragesList() {
-  eraseAllAverage.addEventListener("click", () => {
-    localStorage.removeItem("averages");
 
-    averagesDisplay.innerHTML = [];
-    averageResult.innerHTML = "";
-  })
+    updateDisplay(gradecategorie, displayList, resultdisplay);
+  }
+};
+function emptyMarksList(gradecategorie, displayList, resultdisplay) {
+  localStorage.removeItem(gradecategorie);
+  displayList.innerHTML = [];
+  resultdisplay.innerHTML = "";
 };
 
-function updateDisplay() {
-  displayMarks();
-  displayAverage();
-  displayAverages();
-  displayAveragesAverage();
+function updateDisplay(gradecategorie, displayList, resultdisplay) {
+  displayMarks(gradecategorie, displayList);
+  displayAverage(gradecategorie, resultdisplay);
 }
+
+plus.onclick = () => addMark("marks", input);
+plusAverage.onclick = () => addMark("averages", result);
+
+eraseLastMark.onclick = () => removeLastMark("marks");
+eraseAllMark.onclick = () => emptyMarksList("marks", marksDisplay, result);
+eraseLastAverage.onclick = () => removeLastMark("averages");
+eraseAllAverage.onclick = () => emptyMarksList("averages", averagesDisplay, averageResult);
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -267,20 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
   type(zero);
   type(dot);
 
-  eraseInput();
-  eraseLast();
-
-  addMark();
-  getAverage();
-
-  emptyMarksList();
-  removeLastMark();
-
-  addAverage();
-  getAveragesAverage();
-
-  removeLastAverage();
-  emptyAveragesList();
-
-  updateDisplay();
+  updateDisplay("marks", marksDisplay, result);
+  updateDisplay("averages", averagesDisplay, averageResult);
 });

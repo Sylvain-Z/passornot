@@ -250,6 +250,7 @@ footer p {
     background-color: var(--Orange);
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 .zero {
     width: 197.5px;
